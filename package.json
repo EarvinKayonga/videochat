@@ -1,0 +1,34 @@
+{
+  "name": "video-webrtc",
+  "version": "1.0.0",
+  "description": "React Video P2P",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "sslkeys": "cd ssl; cat keycreate.sh | bash - ; cd -"
+  },
+  "keywords": [
+    "react",
+    "socket.io",
+    "webrtc"
+  ],
+  "author": "Earvin Kayonga",
+  "license": "MIT",
+  "dependencies": {
+    "cluster": "^0.7.7",
+    "express": "^4.14.0",
+    "fs": "0.0.1-security",
+    "getusermedia": "^2.0.0",
+    "https": "^1.0.0",
+    "level": "^1.4.0",
+    "os": "^0.1.1",
+    "simple-peer": "^6.0.7",
+    "url": "^0.11.0",
+    "ws": "^1.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.10.2"
+  }
+}
