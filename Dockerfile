@@ -13,7 +13,9 @@ RUN 			echo "ipv6" >> /etc/modules \
     			echo "http://dl-4.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories; \
     			echo "http://dl-5.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories
 
-RUN			apk add  --no-cache --update git && git clone https://github.com/EarvinKayonga/videochat.git videochat && apk del git;
+#RUN			apk add  --no-cache --update git && git clone https://github.com/EarvinKayonga/videochat.git videochat && apk del git;
+
+ADD			.	videochat
 
 WORKDIR			videochat
 
