@@ -13,8 +13,6 @@ const port    = process.env.PORT || 3002,
       WebSocketServer = ws.Server;
 
 
-
-
 function assign(server, fn){
   let wss = new WebSocketServer({ server: server });
 
