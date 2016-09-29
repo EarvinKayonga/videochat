@@ -10,8 +10,13 @@ const port    = process.env.PORT || 3002,
       url     = require('url'),
       app     = express(),
 
+      room    = require('../db/Room.js'),
+      user    = require('../db/User.js'),
+      authorize = require('../db/index.js').authorize,
+
       WebSocketServer = ws.Server;
 
+let errorMessage = 'UnAuthorized';
 
 function assign(server, fn){
   let wss = new WebSocketServer({ server: server });
@@ -23,7 +28,30 @@ function assign(server, fn){
       console.log('received: %s', message);
     });
 
-    ws.send('something');
+    //ws.send('something');
+
+    ws.on(user.create.url, (message) => {
+      return user.create.handle(message, () => {
+        return (ws.upgradeReq.headers["sec-websocket-key"]);
+      });
+    });
+
+    ws.on(user.update.url, () => {
+      return user.update.handle(message, () => {
+        return (authorize(auth, message)) ? authorize(auth, message) : ws.send(errorMessage) || authorize(auth, message);
+      });
+    });
+
+    ws.on(user.read.url, () => {
+      return user.read.handle(message, () => {
+        return (authorize(auth, message)) ? authorize(auth, message) : ws.send(errorMessage) || authorize(auth, message);
+      });
+    });
+    ws.on(user.delete.url, () => {
+      return user.delete.handle(message, () => {
+        return (authorize(auth, message)) ? authorize(auth, message) : ws.send(errorMessage) || authorize(auth, message);
+      });
+    });
 
     ws.on('close', () => {
       console.log('stopping client interval');
