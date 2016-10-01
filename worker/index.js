@@ -22,7 +22,7 @@ function assign(server, fn){
   let wss = new WebSocketServer({ server: server });
 
   wss.on('connection', (ws) => {
-    let auth = ws.upgradeReq.headers["sec-websocket-key"];
+    let auth = ws.upgradeReq.headers["sec-websocket-key"]
 
     ws.on('message', (message) => {
       console.log('received: %s', message);

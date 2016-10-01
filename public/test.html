@@ -1,13 +1,114 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Test Api</title>
-  </head>
-  <body>
 
+<head>
+    <meta charset="utf-8">
+    <title>Test Api without React (Vanilla JavaScript)</title>
+    <link rel="stylesheet" href="/css/sweetalert.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <h1 id="title">VideoChat</h1>
+    <div id="container">
+        <div id="video">
+
+        </div>
+        <div id="chat">
+            <span class="message">... no messages yet</span>
+        </div>
+    </div>
+
+
+    <script src="/js/simplepeer.min.js"></script>
+    <script src="/js/sweetalert.min.js"></script>
     <script type="text/javascript">
-      
+        function run() {
+            let ws = new WebSocket('wss://' + window.document.location.host);
+
+            function ifUserTaken(username) {
+              //Check if is Taken and set in Level
+              return (false);
+            };
+
+            swal({
+              title: "Who are u ?",
+              text: "Choose a username:",
+              type: "input",
+              showCancelButton: false,
+              closeOnConfirm: false,
+              animation: "slide-from-top",
+              inputPlaceholder: "Choose a username" },
+              (usrNm) => {
+                if (usrNm === false || usrNm === "" || ifUserTaken(usrNm)){
+                  swal.showInputError("You need to write something!");
+                  return (false);
+                } else {
+                  swal("Nice!", "You wrote: " + usrNm, "success");
+                  setTimeout(() => {
+                    return App(usrNm);
+                  }, 1000);
+                };
+              });
+        }
+
+        function notifyFailure() {
+            swal({
+                title: "Oups",
+                text: "The Browser you using doesn't support WEBRTC",
+                imageUrl: "img/web-rtc.png"
+              });
+        };
+
+        (function() {
+            "use strict";
+            return (SimplePeer.WEBRTC_SUPPORT || typeof(Worker) == "undefined") ? run() : notifyFailure();
+        }());
+
+        function App(username){
+          //get users contents and set Front End
+        };
+
+        function wrtc(){
+           navigator.getUserMedia({
+               video: true,
+               audio: true,
+           }, gotMedia, function() {});
+
+           function gotMedia(stream) {
+               var peer = new SimplePeer({
+                   initiator: location.hash === '#init',
+                   trickle: false,
+                   stream: stream
+               })
+
+
+               peer.on('signal', function(data) {
+                   document.getElementById('yourId').innerText = JSON.stringify(data)
+               })
+
+             /*  document.getElementById('connect').addEventListener('click', function() {
+                   var otherId = JSON.parse(document.getElementById('otherId').value)
+                   console.log(otherId);
+                   peer.signal(otherId);
+               })*/
+
+
+               peer.on('stream', function(stream) {
+                   var video = document.createElement('video')
+                   document.body.appendChild(video)
+
+                   video.src = window.URL.createObjectURL(stream)
+                   video.play()
+               })
+           }
+         }
+
+
+
+
+
     </script>
-  </body>
+</body>
+
 </html>

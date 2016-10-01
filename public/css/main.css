@@ -1,0 +1,69 @@
+@import 'open-color.css';
+
+body {
+  background-color: var(--oc-violet-3);
+  color: var(--oc-gray-7);
+}
+
+a {
+  color: var(oc-indigo-7);
+}
+
+a:hover,
+a:focus,
+a:active {
+  color: var(--oc-indigo-7);
+}
+
+.clear {
+  clear: both;
+}
+
+#title {
+  text-align: center;
+  vertical-align:top;
+  font-family: 'Roboto', sans-serif;
+  color: var(--oc-gray-7);
+}
+
+#container {
+  display: flex;
+
+  flex-flow: row wrap-reverse;
+  justify-content: center;
+
+  padding: 50px;
+}
+
+#chat {
+  border: 1px solid var(--oc-red-3);
+  border-radius: 7px;
+  background-color: var(--oc-gray-2);
+  overflow-y: scroll;
+  height: 500px;
+  margin-left: 5px;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.message {
+  flex: 1;
+  margin: 6px;
+  padding: 6px;
+  font-family: 'Roboto', sans-serif;
+  color: var(--oc-gray-7);
+  text-align: center;
+}
+
+#video {
+  border: 1px solid var(--oc-violet-3);
+  border-radius: 7px;
+  background-color: var(--oc-indigo-3);
+  overflow-y: scroll;
+  margin-right: 10px;
+  flex: 3;
+}
