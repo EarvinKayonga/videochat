@@ -50,6 +50,15 @@ a:active {
   align-items: stretch;
 }
 
+#chat span {
+  flex: 1;
+  margin: 6px;
+  padding: 6px;
+  font-family: 'Roboto', sans-serif;
+  color: var(--oc-gray-7);
+  text-align: center;
+}
+
 .message {
   flex: 1;
   margin: 6px;

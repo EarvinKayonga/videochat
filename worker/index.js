@@ -8,19 +8,23 @@ const port    = process.env.PORT || 3002,
       ws      = require('ws'),
       express = require('express'),
       url     = require('url'),
+      bodyParser = require('body-parser'),
       app     = express(),
 
-      room    = require('../db/Room.js'),
-      user    = require('../db/User.js'),
-      authorize = require('../db/index.js').authorize,
+      user    = require('../domain/websocket/User.js'),
+      authorize = require('../domain/websocket/index.js').authorize,
+      userRouter = require('../domain/User.js'),
 
       WebSocketServer = ws.Server;
 
 let errorMessage = 'UnAuthorized';
 
 function assign(server, fn){
-  let wss = new WebSocketServer({ server: server });
+  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(bodyParser.json());
+  app.use('/users', userRouter);
 
+  let wss = new WebSocketServer({ server: server });
   wss.on('connection', (ws) => {
     let auth = ws.upgradeReq.headers["sec-websocket-key"]
 
@@ -57,6 +61,7 @@ function assign(server, fn){
       console.log('stopping client interval');
     });
   });
+
 
   fn();
 };
